@@ -135,7 +135,7 @@ An output pin is for blinking LED.
 
 The following shows the pins definitions on nodemcu (mcu is ESP8266)
 |function|pin code| |Pin code|function|
-|:---|:---|:---|:---|:---|
+| --- | --- | --- | --- | --- |
 ||A0||D0||
 ||RSV||D1|blinking LED pin|
 ||RSV||D2|Detect pin 1|
