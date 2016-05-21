@@ -133,7 +133,8 @@ Two pins are required for detecting IR sensors and thus configured as input [GPI
 
 An output pin is for blinking LED.
 
-The following shows the pins definitions on nodemcu (mcu is ESP8266)
+The following shows the pins definitions on nodemcu (mcu is ESP8266):
+
 |function|pin code| |Pin code|function|
 | --- | --- | --- | --- | --- |
 ||A0||D0||
