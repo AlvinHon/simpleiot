@@ -68,8 +68,7 @@ apt-get install mosquitto
 mosquitto
 ```
 
-#### secondary network configuration using dnsmasq
-To Continue...
+Please note that the network configuration is setup by dnsmasq. Interested parties may look at this [tutorial](https://www.linux.com/learn/dnsmasq-easy-lan-name-services) .
 
 ### MQTT subscriber listens the signals from server ...
 
@@ -111,13 +110,71 @@ if message is not None and message['type'] == 'message':
 ```
 The communication between Rpi and arduino is via a serial port (or [uart](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver/transmitter)).
 
-### Finally, ardunio drive display the counter value ...
-Finally, the arduino UNO accepts commands from RPi and does the blinking accordingly on a 4-digit 7-segment display. A nice tutorial on pins configuration and implementation can be found on [this](http://www.hobbytronics.co.uk/arduino-4digit-7segment).
+### Finally, ardunio displays the counter value on screen...
+The arduino UNO accepts commands from RPi and does the blinking accordingly on a 4-digit 7-segment display. A nice tutorial on pins configuration and implementation can be found on [this](http://www.hobbytronics.co.uk/arduino-4digit-7segment).
 
 ![final result](testresult.gif)
 
 Hardware Part
 ---
 
-To Continue ...
+Hardware in this project includes nodemcu and arduino UNO mainly, while RPi uses only USB port like a computer.
+
+### about IR sensors
+
+![egirsensor](http://robu.in/wp-content/uploads/2016/01/1380800-2.jpg)
+The above image shows sensor similar to the IR sensors used in the project
+
+The IR sensors operates by outputing high logic level voltage when IR signals reflect back to itself indicating something is blocking.
+
+### pins assignment of nodemcu
+
+Two pins are required for detecting IR sensors and thus configured as input [GPIOs](https://en.wikipedia.org/wiki/General-purpose_input/output)
+
+An output pin is for blinking LED.
+
+The following shows the pins definitions on nodemcu (mcu is ESP8266)
+|function|pin code| |Pin code|function|
+|:---|:---|:---|:---|:---|
+||A0||D0||
+||RSV||D1|blinking LED pin|
+||RSV||D2|Detect pin 1|
+||SD3||D3|Detect pin 2|
+||SD2||D4|default LED|
+||SD1||3V3||
+||CMD||GND||
+||SD0||~D5||
+||CLK||~D6||
+||GND||~D7||
+||3V3||~D8||
+||EN||Rx||
+||RST||Tx||
+||GND||GND|common ground|
+||VIN||3V3|power supply to IR sensors|
+
+![nodemcu hardware](hwnodemcu.png)
+
+Please note that some power bank may terminate power if discharge current is very small (as a protection to avoid overcharge/fire). So LEDs can be added so that it draws larger current to avoid such case.
+
+### pins assignment of arduino UNO
+
+Official website shows the pins mapping for arduino UNO (https://www.arduino.cc/en/Hacking/PinMapping168).
+
+The 4-digit 7-segment display requires 12 pins for full control.
+```c
+int digit1 = 13; //PWM Display pin 1
+int digit2 = 10; //PWM Display pin 2
+int digit3 = 9; //PWM Display pin 6
+int digit4 = 7; //PWM Display pin 8
+
+//Pin mapping from Arduino to the ATmega DIP28 if you need it
+//http://www.arduino.cc/en/Hacking/PinMapping
+int segA = 12; //Display pin 14
+int segB = 8; //Display pin 16
+int segC = A0; //Display pin 13
+int segD = 3; //Display pin 3
+int segE = 2; //Display pin 5
+int segF = 11; //Display pin 11
+int segG = 6; //Display pin 15
+```
 
